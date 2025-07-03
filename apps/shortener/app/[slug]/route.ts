@@ -1,5 +1,5 @@
 import { prisma } from '@repo/db/client';
-import { NextResponse } from 'next/server';
+import { NextResponse, type NextRequest } from 'next/server';
 import bcrypt from 'bcryptjs';
 import { parse } from 'node-html-parser';
 
@@ -32,8 +32,8 @@ async function fetchTitle(url: string): Promise<string> {
   }
 }
 
-export async function GET(req: Request, { params }: { params: { slug: string } }) {
-  const { slug } = params;
+export async function GET(req: NextRequest) {
+  const slug = req.nextUrl.pathname.slice(1); // remove leading '/'
   const record = await prisma.url.findUnique({ where: { slug } });
   if (!record) return NextResponse.json({ error: 'Not found' }, { status: 404 });
 
