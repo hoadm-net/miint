@@ -4,7 +4,7 @@ module.exports = {
     {
       name: 'miint-web',
       cwd: './web',
-      script: 'npm',
+      script: 'pnpm',
       args: 'start',
       env: {
         NODE_ENV: 'production',
@@ -18,7 +18,7 @@ module.exports = {
     {
       name: 'miint-docs',
       cwd: './docs',
-      script: 'npm',
+      script: 'pnpm',
       args: 'start',
       env: {
         NODE_ENV: 'production',
@@ -32,7 +32,7 @@ module.exports = {
     {
       name: 'miint-launcher',
       cwd: './launcher',
-      script: 'npm',
+      script: 'pnpm',
       args: 'start',
       env: {
         NODE_ENV: 'production',
@@ -46,11 +46,12 @@ module.exports = {
     {
       name: 'miint-shortener',
       cwd: './shortener',
-      script: 'npm',
+      script: 'pnpm',
       args: 'start',
       env: {
         NODE_ENV: 'production',
-        PORT: 3040
+        PORT: 3040,
+        DATABASE_URL: process.env.DATABASE_URL,
       },
       instances: 1,
       autorestart: true,
