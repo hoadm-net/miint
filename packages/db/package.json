@@ -5,7 +5,8 @@
   "type": "module",
   "main": "client.ts",
   "dependencies": {
-    "@prisma/client": "^5"
+    "@prisma/client": "^5",
+    "prisma": "^5"
   },
   "devDependencies": {
     "prisma": "^5"
