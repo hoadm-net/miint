@@ -1,0 +1,71 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [main]          # build khi push vào main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Lấy code
+      - name: Checkout
+        uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+
+      # 2. Thiết lập pnpm + Node
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9
+          run_install: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'pnpm'
+
+      # 3. Cài dependencies
+      - run: pnpm install --frozen-lockfile
+
+      # 4. Build toàn bộ apps (turbo run build)
+      - run: pnpm build
+
+      # 5. Đóng gói artefact cần thiết
+      - run: |
+          tar czf build.tar.gz \
+            package.json \
+            pnpm-workspace.yaml \
+            pnpm-lock.yaml \
+            apps/*/.next \
+            apps/*/public \
+            apps/*/package.json \
+            apps/*/next.config.* \
+            apps/pm2.config.cjs
+
+      # 6. Copy file build.tar.gz lên server
+      - uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          source: build.tar.gz
+          target: ~/deployments
+
+      # 7. SSH vào server, bung file, cài prod deps, reload PM2
+      - name: Remote deploy
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            set -e
+            mkdir -p ~/app ~/deployments
+            cd ~/deployments
+            tar xzf build.tar.gz -C ~/app
+            cd ~/app
+            pnpm install --prod --frozen-lockfile
+            pm2 startOrReload apps/pm2.config.cjs 
