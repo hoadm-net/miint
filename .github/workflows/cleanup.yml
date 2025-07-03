@@ -1,0 +1,30 @@
+name: Cleanup expired links
+
+on:
+  schedule:
+    - cron: '0 2 * * *' # 02:00 UTC every day
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: pnpm
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+          run_install: true
+
+      - name: Run cleanup script
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: pnpm dlx ts-node packages/db/cleanup.ts 

@@ -6,6 +6,11 @@ const internalApps = [
     href: "/password-gen",
     emoji: "🔑",
   },
+  {
+    name: "URL Shortener",
+    href: "/url-shortener",
+    emoji: "🔗",
+  },
   // You can easily add more internal tools here
 ];
 

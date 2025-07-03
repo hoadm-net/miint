@@ -1,0 +1,17 @@
+{
+  "name": "@repo/db",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "client.ts",
+  "dependencies": {
+    "@prisma/client": "^5"
+  },
+  "devDependencies": {
+    "prisma": "^5"
+  },
+  "scripts": {
+    "generate": "prisma generate",
+    "migrate": "prisma migrate dev --name init"
+  }
+} 

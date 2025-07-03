@@ -45,6 +45,20 @@ export default function DocsHome() {
               Tìm hiểu cách tuỳ chỉnh độ dài, nhóm ký tự và sao chép mật khẩu chỉ với một cú nhấp.
             </p>
           </Link>
+          <Link href="/url-shortener" className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl border border-gray-100 dark:border-gray-700 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+            <div className="flex items-center mb-4">
+              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-xl flex items-center justify-center mr-4">
+                <span className="text-2xl">🔗</span>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white">URL Shortener</h3>
+                <p className="text-purple-600 dark:text-purple-400 font-medium text-sm">Rút gọn liên kết</p>
+              </div>
+            </div>
+            <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+              Hướng dẫn tạo liên kết ngắn, bảo vệ bằng mật khẩu và thiết lập thời gian hết hạn.
+            </p>
+          </Link>
         </div>
       </main>
     </div>
