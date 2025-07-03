@@ -58,8 +58,12 @@ export default function UrlShortener() {
       setUrl('');
       setCustom('');
       setPassword('');
-    } catch (e: any) {
-      alert(e.message);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        alert(err.message);
+      } else {
+        alert('Unexpected error');
+      }
     } finally {
       setLoading(false);
     }
