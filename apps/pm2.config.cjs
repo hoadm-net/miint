@@ -2,25 +2,46 @@
 module.exports = {
   apps: [
     {
-      name: "launcher",
-      cwd: "apps/launcher",
-      script: "pnpm",
-      args: "start",
-      env: { PORT: 3002, NODE_ENV: "production" },
+      name: 'miint-web',
+      cwd: './web',
+      script: 'npm',
+      args: 'start',
+      env: {
+        NODE_ENV: 'production',
+        PORT: 3030
+      },
+      instances: 1,
+      autorestart: true,
+      watch: false,
+      max_memory_restart: '1G',
     },
     {
-      name: "docs",
-      cwd: "apps/docs",
-      script: "pnpm",
-      args: "start",
-      env: { PORT: 3001, NODE_ENV: "production" },
+      name: 'miint-docs',
+      cwd: './docs',
+      script: 'npm',
+      args: 'start',
+      env: {
+        NODE_ENV: 'production',
+        PORT: 3020
+      },
+      instances: 1,
+      autorestart: true,
+      watch: false,
+      max_memory_restart: '1G',
     },
     {
-      name: "web",
-      cwd: "apps/web",
-      script: "pnpm",
-      args: "start",
-      env: { PORT: 3030, NODE_ENV: "production" },
-    },
-  ],
+      name: 'miint-launcher',
+      cwd: './launcher',
+      script: 'npm',
+      args: 'start',
+      env: {
+        NODE_ENV: 'production',
+        PORT: 3010
+      },
+      instances: 1,
+      autorestart: true,
+      watch: false,
+      max_memory_restart: '1G',
+    }
+  ]
 };
